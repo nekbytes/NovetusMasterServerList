@@ -83,6 +83,10 @@
         const decodedStrings = [];
         this.responseText.split("\n").forEach((line) => {
           if (line == "" || line == null || line == undefined) {
+            if(decodedStrings.length <= 0) {
+              decodedStrings.push(["No servers online :("]); // Obv that no severs are online
+              return;
+            }
             return; // end of server list
           }
           const [, encodedString] = line.split("|");
