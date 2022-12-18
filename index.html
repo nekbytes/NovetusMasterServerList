@@ -118,11 +118,13 @@
             const key = new Uint8Array([1, 2, 3, 4, 5, 6, 7, 8]);
             const iv = new Uint8Array([1, 2, 3, 4, 5, 6, 7, 8]);
 
+            // Decoding begins here
             var base64EncodedString = encodedString;
             var base64EncodedBytes = base64Decode(base64EncodedString);
             var string1 = base64EncodedBytes;
             var string2 = string1.split("|");
 
+            // little bit of documentation
             // string2[0] = ServerName
             // string2[1] = IP
             // string2[2] = Game Port
@@ -133,43 +135,6 @@
             console.log(decodedStrings);
           });
           createModal(decodedStrings);
-        }
-      };
-      xhr.send();
-    }
-
-    function ReInitate() {
-      const xhr = new XMLHttpRequest();
-      xhr.open('GET', 'serverlist.txt', true);
-      xhr.onload = function () {
-        if (this.status === 200) {
-          const decodedStrings = [];
-          this.responseText.split("\n").forEach((line) => {
-            if (line == "" || line == null || line == undefined) {
-              if (decodedStrings.length <= 0) {
-                decodedStrings.push(["No servers online :("]); // Obv that no severs are online
-                return;
-              }
-              return; // end of server list
-            }
-            const [, encodedString] = line.split("|");
-            const key = new Uint8Array([1, 2, 3, 4, 5, 6, 7, 8]);
-            const iv = new Uint8Array([1, 2, 3, 4, 5, 6, 7, 8]);
-
-            var base64EncodedString = encodedString;
-            var base64EncodedBytes = base64Decode(base64EncodedString);
-            var string1 = base64EncodedBytes;
-            var string2 = string1.split("|");
-
-            // string2[0] = ServerName
-            // string2[1] = IP
-            // string2[2] = Game Port
-            // string2[3] = Game Version
-            // string2[4] = Novetus Version
-
-            decodedStrings.push(base64Decode(string2[0]) + " " + base64Decode(string2[1]) + " " + base64Decode(string2[2]) + " " + base64Decode(string2[3]) + " " + base64Decode(string2[4]));
-            console.log(decodedStrings);
-          });
         }
       };
       xhr.send();
