@@ -1,4 +1,5 @@
 <!-- Code was written by .nekuzi#0001, Please do not steal my code, learn from it <3 -->
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -7,18 +8,19 @@
       font-family: sans-serif;
       margin: 0;
       padding: 0;
+      background-color: rgba(0, 0, 0, 0.5);
     }
 
     .modal-container {
       display: flex;
       justify-content: center;
       align-items: center;
-      position: fixed;
+      /*position: fixed;*/
       top: 0;
       left: 0;
       right: 0;
       bottom: 0;
-      background-color: rgba(0, 0, 0, 0.5);
+      /*background-color: rgba(0, 0, 0, 0.5);*/
     }
 
     .modal {
@@ -33,14 +35,18 @@
 
     h1 {
       text-align: center;
-      bottom: 50%
     }
   </style>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
 <body>
   <h1>Active Servers:</h1>
-  <div class="modal-container"></div>
+  <b>
+    <div class="modal-container"></div>
+  </b>
   <script>
     function base64Decode(encodedString) {
       const decodedString = window.atob(encodedString);
@@ -89,6 +95,7 @@
           // string2[4] = Novetus Version
 
           decodedStrings.push(base64Decode(string2[0]) + " " + base64Decode(string2[1]) + " " + base64Decode(string2[2]) + " " + base64Decode(string2[3]) + " " + base64Decode(string2[4]));
+          console.log(decodedStrings);
         });
         createModal(decodedStrings);
       }
