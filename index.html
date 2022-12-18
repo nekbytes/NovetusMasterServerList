@@ -1,0 +1,94 @@
+<!-- Code was written by .nekuzi#0001, Please do not steal my code, learn from it <3 -->
+<html>
+
+<head>
+  <style>
+    .modal-container {
+      position: relative;
+    }
+
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: white;
+      padding: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="modal-container"></div>
+  <script>
+    function base64Decode(encodedString) {
+      const decodedString = window.atob(encodedString);
+      return decodedString;
+    }
+
+    //function base64Decode(encodedString) {
+    //const decodedString = atob(encodedString);
+    //return decodedString;
+    //}
+
+    function createModal(decodedStrings) {
+      const modalContainer = document.createElement('div');
+      modalContainer.classList.add('modal');
+
+      const modalContent = document.createElement('div');
+      modalContent.classList.add('modal-content');
+
+      decodedStrings.forEach((str) => {
+        const p = document.createElement('p');
+        p.innerText = str;
+        modalContent.appendChild(p);
+      });
+
+      modalContainer.appendChild(modalContent);
+      document.querySelector('.modal-container').appendChild(modalContainer);
+    }
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', 'serverlist.txt', true);
+    xhr.onload = function () {
+      if (this.status === 200) {
+        const decodedStrings = [];
+        this.responseText.split("\n").forEach((line) => {
+          console.log(line);
+          if(line == "" || line == null || line == undefined) {
+            return; // end of text
+          }
+          const [, encodedString] = line.split("|");
+          const key = new Uint8Array([1, 2, 3, 4, 5, 6, 7, 8]);
+          const iv = new Uint8Array([1, 2, 3, 4, 5, 6, 7, 8]);
+
+          var base64EncodedString = encodedString;
+          var base64EncodedBytes = base64Decode(base64EncodedString);
+          var string1 = base64EncodedBytes;
+          var string2 = string1.split("|");
+
+          // string2[0] = ServerName
+          // string2[1] = IP
+          // string2[2] = Game Port
+          // string2[3] = Game Version
+          // string2[4] = Novetus Version
+
+          decodedStrings.push(base64Decode(string2[0]) + " " + base64Decode(string2[1]) + " " + base64Decode(string2[2]) + " " + base64Decode(string2[3]) + " " + base64Decode(string2[4]));
+        });
+        createModal(decodedStrings);
+      }
+    };
+    xhr.send();
+  </script>
+</body>
+
+</html>
