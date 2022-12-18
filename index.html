@@ -12,7 +12,7 @@
       background-image: url("assets/bg.jpg");
       height: 1000px;
       background-position: center;
-      background-repeat: no-repeat;
+      background-repeat: repeat;
       background-size: cover;
     }
 
@@ -105,8 +105,20 @@
 
     function Initate() {
       const xhr = new XMLHttpRequest();
-      xhr.open('GET', 'serverlist.txt', true);
+      try {
+        xhr.open('GET', 'serverlist.txt', true);
+      } catch {
+        var dcode = [];
+        dcode.push(["No servers online :("]);
+        createModal(dcode);
+        return;
+      }
       xhr.onload = function () {
+        if(this.status == 404) {
+          var dcode = [];
+          dcode.push(["No servers online :("]);
+          createModal(dcode);
+        }
         if (this.status === 200) {
           const decodedStrings = [];
           this.responseText.split("\n").forEach((line) => {
